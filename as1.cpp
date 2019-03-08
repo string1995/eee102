@@ -145,6 +145,12 @@ int Fraction::get_common_divisor() const
 }
 
 
+void get_decimal_repeating_part(double f)
+{
+    double t_dec = f - (int)f;
+
+    
+}
 
 
 
