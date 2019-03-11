@@ -3,6 +3,55 @@
 #include <algorithm>
 #include <string>
 #include <sstream>
+#include <cmath>
+
+#define DOUBLE_MAX_LENGTH 6
+
+
+namespace std {
+string to_string(int val) {
+    char buf[20];
+    sprintf(buf, "%d", val);
+    return string(buf);
+}
+ 
+string to_string(unsigned val) {
+    char buf[20];
+    sprintf(buf, "%u", val);
+    return string(buf);
+}
+ 
+string to_string(long val) {
+    char buf[20];
+    sprintf(buf, "%ld", val);
+    return string(buf);
+}
+ 
+string to_string(unsigned long val) {
+    char buf[20];
+    sprintf(buf, "%lu", val);
+    return string(buf);
+}
+ 
+string to_string(float val) {
+    char buf[200];
+    sprintf(buf, "%f", val);
+    return string(buf);
+}
+ 
+string to_string(double val) {
+    char buf[2000];
+    sprintf(buf, "%f", val);
+    return string(buf);
+}
+string to_string(long double val) {
+    char buf[20000];
+    sprintf(buf, "%Lf", val);
+    return string(buf);
+}
+}
+
+
 
 using namespace std;
 
@@ -144,13 +193,41 @@ int Fraction::get_common_divisor() const
     return t_top;
 }
 
-
+/*
 void get_decimal_repeating_part(double f)
 {
     double t_dec = f - (int)f;
 
     
 }
+*/
+int get_double_decimals_length(double d)
+{
+    ostringstream out;
+    //out.precision(18);//覆盖默认精度
+    out<<d;
+    string s= out.str();
+    return s.length();
+}
+
+
+/* 两位以上*/
+unsigned long int transfer_double_decimals_to_unsigned_long_int(double d)
+{
+    unsigned long int t = (unsigned long int)(d*(1000000000));
+
+    while(d != 0 && t % (t/10) == 0 && t > 100) t /= 10;
+
+    return t;
+}
+
+
+inline unsigned long int get_double_decimals_part(double d)
+{
+    return transfer_double_decimals_to_unsigned_long_int(d-floor(d));
+} 
+
+
 
 
 
@@ -169,8 +246,8 @@ int main()
    // for(int i =0; i < a.size(); i++) cout << a[i] <<endl;
 
     //try{
-    cout << f.toStr()<<endl;
-    cout << f.val();
+    cout << get_double_decimals_part(34234)<<endl;
+    //cout << f.val();
     //}catch(const char* msg){
      //   cerr << msg << endl;
     //}
