@@ -260,7 +260,7 @@ unsigned short get_long_int_length(long int t)
 }
 
 
-unsigned int get_repeart_part(const unsigned long int& t)
+unsigned int get_repeat_part(const unsigned long int& t)
 {
     unsigned short i = 1;
     unsigned short len = get_long_int_length(t);
@@ -280,18 +280,63 @@ unsigned int get_repeart_part(const unsigned long int& t)
 
     return 0;
 }
-/*
-void repeated_decimal_to_fraction(double d)
+
+void confirm_repeat_part(const unsigned long int& t, unsigned int& repeat, unsigned short& start)
 {
-    get_double_integer_part(d)
-    unsigned long int decimal = get_double_decimals_part(d);
-    unsigned int body = get_repeart_part(decimal);
+    unsigned short len = get_long_int_length(repeat);
 
-    for(unsigned short i = get_long_int_length(body); i < )
+    for(unsigned short i = get_long_int_length(t); i > len; i--){
 
+        bool k = false;
+
+        if(len == 1 && get_one_decimal(t, i) == get_one_decimal(repeat, 1)) k = true;
+
+        if(len == 2 && ((get_one_decimal(t, i) == get_one_decimal(repeat, 1) && get_one_decimal(t, i+1) == get_one_decimal(repeat, 2)) || (get_one_decimal(t, i+1) == get_one_decimal(repeat, 1) && get_one_decimal(t, i) == get_one_decimal(repeat, 2)))) k = true;
+
+        if(len == 3 && ((get_one_decimal(t, i) == get_one_decimal(repeat, 1) && get_one_decimal(t, i+1) == get_one_decimal(repeat, 2) && get_one_decimal(t, i+2) == get_one_decimal(repeat, 3)) || (get_one_decimal(t, i+1) == get_one_decimal(repeat, 1) && get_one_decimal(t, i+2) == get_one_decimal(repeat, 2) && get_one_decimal(t, i) == get_one_decimal(repeat, 3)) || (get_one_decimal(t, i+2) == get_one_decimal(repeat, 1) && get_one_decimal(t, i) == get_one_decimal(repeat, 2) && get_one_decimal(t, i+1) == get_one_decimal(repeat, 3)))) k = true;
+        
+        if(k){
+            repeat = t / (unsigned int)pow(10, i -1 - len) - (t / (unsigned int)pow(10, i - 1)) * (unsigned int)pow(10, len);
+            start = i;
+            break;
+        }
+    }
 }
 
-*/
+void repeated_decimal_to_fraction(double d)
+{
+    unsigned long int t = get_double_decimals_part(d);
+
+    unsigned short start = 0;
+    unsigned int up, down = 0;
+
+    unsigned int repeat = get_repeat_part(t);
+
+    //cout << repeat << endl;
+
+    confirm_repeat_part(t, repeat, start);
+
+    //cout << repeat << endl;
+
+    for(int i = 0; i < get_long_int_length(repeat); i++){
+
+        down += 9 * (unsigned int)pow(10, i);
+    }
+
+    down *= (unsigned int)pow(10, (get_long_int_length(t) - start));
+
+    //cout << down << endl;
+
+    up = t % (unsigned int)pow(10, get_long_int_length(repeat));
+
+    //cout << up << endl;
+    _top = up;
+    _bottom = down;
+}
+
+
+
+
 int main()
 {
     vector<int> a;
@@ -308,7 +353,7 @@ int main()
 
     //try{
 
-    cout << get_repeart_part(132123354) << endl ;
+    repeated_decimal_to_fraction(2.666);
     //}catch(const char* msg){
      //   cerr << msg << endl;
     //}
