@@ -103,17 +103,176 @@ class Fraction {
         ~Fraction(){};
 
         /* 加法重载 */
-        Fraction operator+(const Fraction& obj){
-            Fraction f(this->top() * obj.bottom() + this->bottom() * obj.top(), this->bottom() * obj.bottom());
+        Fraction operator +(const Fraction& obj){
+            return Fraction(this->top() * obj.bottom() + this->bottom() * obj.top(), this->bottom() * obj.bottom());
+        }
+
+        /* 减法重载 */
+        Fraction operator -(const Fraction& obj){
+            return Fraction(this->top() * obj.bottom() - this->bottom() * obj.top(), this->bottom() * obj.bottom());
+        }
+
+        /* 乘法重载 */
+        Fraction operator *(const Fraction& obj){
+            return Fraction(this->top() * obj.top(), this->bottom() * obj.bottom());
+        }
+
+        /* 除法重载 */
+        Fraction operator /(const Fraction& obj){
+            return Fraction(this->top() * obj.bottom(), this->bottom() * obj.top());
+        }
+
+        /* 求余重载 */
+        Fraction operator %(const Fraction& obj){
+            return Fraction(fmod(this->val(), obj.val()));
+        }
+
+        /* 求余重载 */
+        Fraction operator %(const int t){
+            return Fraction(fmod(this->val(), t));
+        }
+
+        /* 求余重载 */
+        Fraction operator %(const double t){
+            return Fraction(fmod(this->val(), t));
+        }
+
+        /* 负号重载 */
+        Fraction operator -(){
+            return Fraction(-this->top(), this->bottom());
+        }
+
+        /* 倒数重载 */
+        Fraction operator ~(){
+            return Fraction(this->top(), this->bottom());
+        }
+
+        /* 小于号重载 */
+        bool operator <(const Fraction& obj){
+            return (this->val() < obj.val())? true : false;
+        }
+
+        /* 小于等于号重载 */
+        bool operator <=(const Fraction& obj){
+            return (this->val() <= obj.val())? true : false;
+        }
+
+        /* 大于号重载 */
+        bool operator >(const Fraction& obj){
+            return (this->val() > obj.val())? true : false;
+        }
+
+        /* 大于等于号重载 */
+        bool operator >=(const Fraction& obj){
+            return (this->val() >= obj.val())? true : false;
+        }
+
+        /* 等于号重载 */
+        bool operator ==(const Fraction& obj){
+            return (this->top() == obj.top() && this->bottom() == obj.bottom())? true : false;
+        }
+
+        /* 不等于号重载 */
+        bool operator !=(const Fraction& obj){
+            return (!(this->top() == obj.top() && this->bottom() == obj.bottom()))? true : false;
+        }
+
+        /* 前++重载 */
+        Fraction operator ++(){
+            if(_isNegative) _top -= _bottom;
+            else _top += _bottom;
+            return *this;
+        }
+
+        /* 后++重载 */
+        Fraction operator ++(int){
+            Fraction f = *this;
+            if(_isNegative) _top -= _bottom;
+            else _top += _bottom;
             return f;
         }
 
+        /* 前--重载 */
+        Fraction operator --(){
+            if(_isNegative) _top += _bottom;
+            else _top -= _bottom;
+            return *this;
+        }
 
+        /* 后--重载 */
+        Fraction operator --(int){
+            Fraction f = *this;
+            if(_isNegative) _top += _bottom;
+            else _top -= _bottom;
+            return f;
+        }
+
+        /* 赋值重载 */
+        void operator =(const Fraction& obj){ 
+            set(obj.top(), obj.bottom());
+        }
+
+        /* 加法赋值重载 */
+        Fraction operator +=(const Fraction& obj){
+            set(this->top() * obj.bottom() + this->bottom() * obj.top(), this->bottom() * obj.bottom());
+            return *this;
+        }
+
+        /* 减法赋值重载 */
+        Fraction operator -=(const Fraction& obj){
+            set(this->top() * obj.bottom() - this->bottom() * obj.top(), this->bottom() * obj.bottom());
+            return *this;
+        }
+
+        /* 乘法赋值重载 */
+        Fraction operator *=(const Fraction& obj){
+            set(this->top() * obj.top(), this->bottom() * obj.bottom());
+            return *this;
+        }
+
+        /* 除法赋值重载 */
+        Fraction operator /=(const Fraction& obj){
+            set(this->top() * obj.bottom(), this->bottom() * obj.top());
+            return *this;
+        }
+
+        /* 输出流重载 */
+        friend ostream &operator <<(ostream &o, Fraction f){ 
+            o << f.toStr();
+            return o;
+        }
+
+        /* 输入流重载 */
+        friend istream &operator >>(istream &i, Fraction &f){
+            string s;
+            stringstream ss;
+            i >> s;
+            if(s.find("/") != s.npos){
+                int top, bottom;
+
+                ss << s.substr(0, s.find("/"));
+                ss >> top;
+                ss.clear(); //清stream缓存
+                ss.str("");
+                ss << s.substr(s.find("/") + 1);
+                ss >> bottom;
+                f.set(top, bottom);
+            }else{
+                double val;
+                ss << s;
+                ss >> val;
+                f.set(val);
+            }
+        }
+
+        /* 分数形式输入配置 */
         inline void set(int top = 0, int bottom = 1){
             ini();
             adjust_minus(top, bottom);
+            simplify();
         }
 
+        /* 小数形式输入配置 */
         inline void set(double d = 0){
             ini();
             is_double_negative(d);
@@ -131,7 +290,6 @@ class Fraction {
         }
         /* 提取string形式分数结果 */
         inline string toStr(){
-            simplify();
             stringstream ss;
             ss << ((_isNegative) ? "-" : "") << _top << "/" << _bottom;
             return ss.str();
@@ -144,6 +302,7 @@ class Fraction {
         inline int bottom() const{
             return (int)_bottom;
         }
+
 
     private:
         /* 主要变量 */
@@ -208,6 +367,17 @@ class Fraction {
                 _isNegative = false;
             }
         }
+
+        /* 去除空格 */
+        void remove_space(string& s){
+
+            while(1){
+
+                size_t pos = s.find(" ");
+                if(pos == string::npos) return;
+                s.erase(pos, 1);
+            }
+        };
 
         /* 小数强制转分数 */
         void dec_to_frac_direct(double d);
@@ -417,10 +587,10 @@ int main()
     b.push_back(2);b.push_back(4);b.push_back(3);b.push_back(5);
 
     Fraction f(-4,1);
-    Fraction g(-4,1);
-    Fraction k=f+g;
+    Fraction g(-5,1);
+    f /= g;
 
-    Fraction l = f;
+    Fraction l = 3.12;
 
     double c;
 
@@ -428,7 +598,9 @@ int main()
    // for(int i =0; i < a.size(); i++) cout << a[i] <<endl;
 
     try{
-        cout << k.toStr() << endl;
+while(1){
+        cout << l << endl;
+        cin >> l;}
 
     //repeated_decimal_to_fraction(2.666);
     }catch(const char* msg){
