@@ -576,16 +576,57 @@ void Fraction::repeated_decimal_to_fraction(double d)
     _bottom = down;
 }
 
+inline bool is_num(const char c)
+{
+    return (c > 47 && c < 58)? true : false;
+}
 
+inline int char_to_num(const char c)
+{
+    return (int)c - (int)'0';
+}
+
+int get_int_from_string(const string& s, int pos)
+{
+    if(!is_num(s.at(pos))) return 0;
+
+    int t = char_to_num(s.at(pos));
+
+    while(++pos < s.length() && is_num(s.at(pos))){
+
+        t = t * 10 + char_to_num(s.at(pos));
+    }
+
+    return t;
+}
+
+
+void getVec(vector<int>& v)
+{
+    int t;
+    string s;
+
+    getline(cin, s);
+    int i = 0;
+    while(i < s.length()){
+
+        if(is_num(s.at(i))) v.push_back(get_int_from_string(s, i));
+
+        while( ++i < s.length() && !is_num(s.at(i)));
+    }
+}
 
 
 int main()
 {
     vector<int> a;
-    a.push_back(4);a.push_back(3);a.push_back(2);a.push_back(5);a.push_back(3);a.push_back(3);
-    vector<int> b;
-    b.push_back(2);b.push_back(4);b.push_back(3);b.push_back(5);
+    getVec(a);
 
+    vector<int> b;
+    getVec(b);
+    
+    if(same_vec(a,b)) cout << "yyy";
+/*
     Fraction f(-4,1);
     Fraction g(-5,1);
     f /= g;
@@ -605,7 +646,7 @@ while(1){
     //repeated_decimal_to_fraction(2.666);
     }catch(const char* msg){
         cerr << msg << endl;
-    }
+    }*/
 
     return 0;
 }
