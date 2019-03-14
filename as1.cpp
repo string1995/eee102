@@ -5,7 +5,6 @@
 #include <sstream>
 #include <cmath>
 
-#define DOUBLE_MAX_LENGTH 6
 
 
 using namespace std;
