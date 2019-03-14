@@ -56,77 +56,77 @@ class Fraction {
         ~Fraction(){};
 
         /* 加法重载 */
-        Fraction operator +(const Fraction& obj){
+        Fraction operator +(const Fraction& obj) const{
             return Fraction(this->top() * obj.bottom() + this->bottom() * obj.top(), this->bottom() * obj.bottom());
         };
 
         /* 减法重载 */
-        Fraction operator -(const Fraction& obj){
+        Fraction operator -(const Fraction& obj) const{
             return Fraction(this->top() * obj.bottom() - this->bottom() * obj.top(), this->bottom() * obj.bottom());
         };
 
         /* 乘法重载 */
-        Fraction operator *(const Fraction& obj){
+        Fraction operator *(const Fraction& obj) const{
             return Fraction(this->top() * obj.top(), this->bottom() * obj.bottom());
         };
 
         /* 除法重载 */
-        Fraction operator /(const Fraction& obj){
+        Fraction operator /(const Fraction& obj) const{
             return Fraction(this->top() * obj.bottom(), this->bottom() * obj.top());
         };
 
         /* 求余重载 */
-        Fraction operator %(const Fraction& obj){
+        Fraction operator %(const Fraction& obj) const{
             return Fraction(fmod(this->val(), obj.val()));
         };
 
         /* 求余重载 */
-        Fraction operator %(const int t){
+        Fraction operator %(const int t) const{
             return Fraction(fmod(this->val(), t));
         };
 
         /* 求余重载 */
-        Fraction operator %(const double t){
+        Fraction operator %(const double t) const{
             return Fraction(fmod(this->val(), t));
         };
 
         /* 负号重载 */
-        Fraction operator -(){
+        Fraction operator -() const{
             return Fraction(-this->top(), this->bottom());
         };
 
         /* 倒数重载 */
-        Fraction operator ~(){
+        Fraction operator ~() const{
             return Fraction(this->bottom(), this->top());
         };
 
         /* 小于号重载 */
-        bool operator <(const Fraction& obj){
+        bool operator <(const Fraction& obj) const{
             return (this->val() < obj.val())? true : false;
         };
 
         /* 小于等于号重载 */
-        bool operator <=(const Fraction& obj){
+        bool operator <=(const Fraction& obj) const{
             return (this->val() <= obj.val())? true : false;
         };
 
         /* 大于号重载 */
-        bool operator >(const Fraction& obj){
+        bool operator >(const Fraction& obj) const{
             return (this->val() > obj.val())? true : false;
         };
 
         /* 大于等于号重载 */
-        bool operator >=(const Fraction& obj){
+        bool operator >=(const Fraction& obj) const{
             return (this->val() >= obj.val())? true : false;
         };
 
         /* 等于号重载 */
-        bool operator ==(const Fraction& obj){
+        bool operator ==(const Fraction& obj) const{
             return (this->top() == obj.top() && this->bottom() == obj.bottom())? true : false;
         };
 
         /* 不等于号重载 */
-        bool operator !=(const Fraction& obj){
+        bool operator !=(const Fraction& obj) const{
             return (!(this->top() == obj.top() && this->bottom() == obj.bottom()))? true : false;
         };
 
@@ -335,7 +335,7 @@ class Fraction {
         };
 
         /* 去除空格 */
-        void remove_space(string& s){
+        void remove_space(string& s) const{
 
             while(1){
 
@@ -349,13 +349,13 @@ class Fraction {
         void dec_to_frac_direct(double d);
 
         /* 无限循环小数转分数 - 补丁 */
-        unsigned long int transfer_double_decimals_to_unsigned_long_int_for_single(const double& d);
+        unsigned long int transfer_double_decimals_to_unsigned_long_int_for_single(const double& d) const;
 
         /* 转换double小数部分到长整型 */
         unsigned long int transfer_double_decimals_to_unsigned_long_int(const double& d);
 
         /* 获取double小数整数部分 */
-        inline unsigned long int get_double_integer_part(const double& d){
+        inline unsigned long int get_double_integer_part(const double& d) const{
             return (unsigned long int)floor(fabs(d));
         };
 
@@ -366,12 +366,12 @@ class Fraction {
         };
 
         /* 获取小数部分的某一位 */
-        inline unsigned short get_one_decimal(const unsigned long int& t, unsigned short point){
+        inline unsigned short get_one_decimal(const unsigned long int& t, unsigned short point) const{
             return (t / (unsigned int)pow(10, point - 1)) % 10;
         };
 
         /* 获取 int 长度 */
-        unsigned short get_long_int_length(long int t);
+        unsigned short get_long_int_length(long int t) const;
 
         /* 获取循环小数循环体 */
         unsigned int get_repeat_part(const unsigned long int& t);
@@ -432,9 +432,14 @@ int Fraction::get_common_divisor() const
 }
 
 
-
-
-unsigned long int Fraction::transfer_double_decimals_to_unsigned_long_int_for_single(const double& d)
+/**
+ * 无限循环小数转分数 - 补丁
+ *
+ * @access private
+ * @param double d 需要过滤的数
+ * @return unsigned long int 转换结果
+ */
+unsigned long int Fraction::transfer_double_decimals_to_unsigned_long_int_for_single(const double& d) const
 {
     if(d > 0.09999999999 && d < 0.100000000001) return 1;
     if(d > 0.19999999999 && d < 0.200000000001) return 2;
@@ -449,6 +454,13 @@ unsigned long int Fraction::transfer_double_decimals_to_unsigned_long_int_for_si
 }
 
 
+/**
+ * 转换double小数部分到长整型
+ *
+ * @access private
+ * @param double d 需要转换的数
+ * @return unsigned long int 转换结果
+ */
 unsigned long int Fraction::transfer_double_decimals_to_unsigned_long_int(const double& d)
 {
     if(transfer_double_decimals_to_unsigned_long_int_for_single(d)) return transfer_double_decimals_to_unsigned_long_int_for_single(d);
@@ -463,7 +475,14 @@ unsigned long int Fraction::transfer_double_decimals_to_unsigned_long_int(const 
 }
 
 
-unsigned short Fraction::get_long_int_length(long int t)
+/**
+ * 获取 int 长度
+ *
+ * @access private
+ * @param long int t 需要测量的数
+ * @return unsigned short 测量长度
+ */
+unsigned short Fraction::get_long_int_length(long int t) const
 {
     int count = 0;
     while(t){
@@ -476,6 +495,13 @@ unsigned short Fraction::get_long_int_length(long int t)
 }
 
 
+/**
+ * 获取循环小数循环体
+ *
+ * @access private
+ * @param unsigned long int t 长整型的小数部分
+ * @return unsigned int 循环体
+ */
 unsigned int Fraction::get_repeat_part(const unsigned long int& t)
 {
     unsigned short i = 1;
@@ -497,6 +523,16 @@ unsigned int Fraction::get_repeat_part(const unsigned long int& t)
     return 0;
 }
 
+
+/**
+ * 检查循环体顺序
+ *
+ * @access private
+ * @param unsigned long int t 长整型的小数部分
+ * @param unsigned short& repeat 循环体部分 引用
+ * @param unsigned short& start 循环起始位置 引用
+ * @return void
+ */
 void Fraction::confirm_repeat_part(const unsigned long int& t, unsigned int& repeat, unsigned short& start)
 {
     unsigned short len = get_long_int_length(repeat);
@@ -519,6 +555,14 @@ void Fraction::confirm_repeat_part(const unsigned long int& t, unsigned int& rep
     }
 }
 
+
+/**
+ * 循环小数转分数
+ *
+ * @access private
+ * @param double d 待转小数
+ * @return void
+ */
 void Fraction::repeated_decimal_to_fraction(double d)
 {
 
