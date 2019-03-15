@@ -573,11 +573,11 @@ void Fraction::repeated_decimal_to_fraction(double d)
 
     unsigned int repeat = get_repeat_part(t);
 
-    //cout << repeat << endl;
+    cout << repeat << endl;
 
     confirm_repeat_part(t, repeat, start);
 
-    //cout << repeat << endl;
+    cout << repeat << endl;
 
     for(int i = 0; i < get_long_int_length(repeat); i++){
 
@@ -586,13 +586,13 @@ void Fraction::repeated_decimal_to_fraction(double d)
 
     down *= (unsigned int)pow(10, (get_long_int_length(t) - start));
 
-    //cout << down << endl;
+    cout << down << endl;
 
-    up = t % (unsigned int)pow(10, get_long_int_length(repeat));
+    up = t % (unsigned int)pow(10, get_long_int_length(repeat)) + (t / (unsigned int)pow(10, start)) * ((unsigned int)pow(10, get_long_int_length(repeat)) - 1);
 
     up = up + get_double_integer_part(d) * down;
 
-    //cout << up << endl;
+    cout << up << endl;
     _top = up;
     _bottom = down;
 }
