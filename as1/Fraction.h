@@ -516,7 +516,7 @@ unsigned int Fraction::get_repeat_part(const unsigned long int& t)
 
             if(get_one_decimal(t, j) == get_one_decimal(t, j + i - 1)) count++;
         }
-
+        //cout << "iii" << i << endl;
         if(count == i - 1) return t % (unsigned int)pow(10, i - 1);
     }
 
@@ -548,9 +548,13 @@ void Fraction::confirm_repeat_part(const unsigned long int& t, unsigned int& rep
         if(len == 3 && ((get_one_decimal(t, i) == get_one_decimal(repeat, 1) && get_one_decimal(t, i+1) == get_one_decimal(repeat, 2) && get_one_decimal(t, i+2) == get_one_decimal(repeat, 3)) || (get_one_decimal(t, i+1) == get_one_decimal(repeat, 1) && get_one_decimal(t, i+2) == get_one_decimal(repeat, 2) && get_one_decimal(t, i) == get_one_decimal(repeat, 3)) || (get_one_decimal(t, i+2) == get_one_decimal(repeat, 1) && get_one_decimal(t, i) == get_one_decimal(repeat, 2) && get_one_decimal(t, i+1) == get_one_decimal(repeat, 3)))) k = true;
         
         if(k){
-            repeat = t / (unsigned int)pow(10, i -1 - len) - (t / (unsigned int)pow(10, i - 1)) * (unsigned int)pow(10, len);
-            start = i;
-            break;
+            unsigned short t_repeat = t / (unsigned int)pow(10, i -1 - len) - (t / (unsigned int)pow(10, i - 1)) * (unsigned int)pow(10, len);
+            if(t_repeat == repeat && repeat < 100) start = i + 1;
+            else if(t_repeat == repeat && repeat < 1000) start = i + 2;
+            else start = i;
+            repeat = t_repeat;
+
+            return;
         }
     }
 }
@@ -582,9 +586,9 @@ void Fraction::repeated_decimal_to_fraction(double d)
     for(int i = 0; i < get_long_int_length(repeat); i++){
 
         down += 9 * (unsigned int)pow(10, i);
-    }
+    }//cout << "sds" << down << " " << (get_long_int_length(t) - start) << endl;
 
-    down *= (unsigned int)pow(10, (get_long_int_length(t) - start));
+    down *= (get_long_int_length(t) - start > 0)? (unsigned int)pow(10, (get_long_int_length(t) - start)) : 1;
 
     cout << down << endl;
 

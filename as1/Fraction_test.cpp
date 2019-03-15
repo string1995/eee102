@@ -98,13 +98,14 @@ int main()
         cout << msg << endl;
     }
 
+    while(1){
     try{
         cout << endl << "Please Input a Fraction(-3/5) or a Decimals(e.g. 3.14): ";
         cin >> a;
         cout << a << endl;
     }catch(const char* msg){
         cout << endl << msg << endl;
-    }
+    }}
     
     return 0;
 }
