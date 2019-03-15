@@ -13,6 +13,7 @@ int main()
     Fraction f = -b;
 
 
+
     cout << "Output in Fraction Form: " << endl;
     cout << "a: " << a << endl;
     cout << "b: " << b << endl;
@@ -97,5 +98,13 @@ int main()
         cout << msg << endl;
     }
 
+    try{
+        cout << endl << "Please Input a Fraction(-3/5) or a Decimals(e.g. 3.14): ";
+        cin >> a;
+        cout << a << endl;
+    }catch(const char* msg){
+        cout << endl << msg << endl;
+    }
+    
     return 0;
 }
