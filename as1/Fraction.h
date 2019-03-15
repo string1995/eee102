@@ -60,6 +60,11 @@ class Fraction {
             return Fraction(this->top() * obj.bottom() + this->bottom() * obj.top(), this->bottom() * obj.bottom());
         };
 
+        /* 加法重载(后) */
+        friend Fraction operator +(const double d, const Fraction& obj){
+            return obj + d;
+        };
+
         /* 减法重载 */
         Fraction operator -(const Fraction& obj) const{
             return Fraction(this->top() * obj.bottom() - this->bottom() * obj.top(), this->bottom() * obj.bottom());
@@ -68,6 +73,11 @@ class Fraction {
         /* 乘法重载 */
         Fraction operator *(const Fraction& obj) const{
             return Fraction(this->top() * obj.top(), this->bottom() * obj.bottom());
+        };
+
+        /* 乘法重载(后) */
+        friend Fraction operator *(const double d, const Fraction& obj){
+            return obj * d;
         };
 
         /* 除法重载 */
@@ -396,7 +406,7 @@ class Fraction {
 void Fraction::dec_to_frac_direct(double d)
 {
     unsigned short t = get_long_int_length(get_double_decimals_part(d));
-
+    //cout << t << endl;
     _top = d * (int)pow(10, t);
     _bottom = (unsigned int)pow(10, t);
 }
@@ -469,7 +479,7 @@ unsigned long int Fraction::transfer_double_decimals_to_unsigned_long_int(const 
 
     while(d != 0 && (t % (t/10) == 0 || t % (t/10) == 9) && t > 100) t /= 10;
 
-    if((unsigned long int)(d*(1000000000)) % 1000 == 999) return ++t;
+    //if((unsigned long int)(d*(1000000000)) % 1000 == 999) return ++t;
 
     return t;
 }
@@ -549,7 +559,8 @@ void Fraction::confirm_repeat_part(const unsigned long int& t, unsigned int& rep
         
         if(k){
             unsigned short t_repeat = t / (unsigned int)pow(10, i -1 - len) - (t / (unsigned int)pow(10, i - 1)) * (unsigned int)pow(10, len);
-            if(t_repeat == repeat && repeat < 100) start = i + 1;
+            if(t_repeat == repeat && repeat < 10) start = i;
+            else if(t_repeat == repeat && repeat < 100) start = i + 1;
             else if(t_repeat == repeat && repeat < 1000) start = i + 2;
             else start = i;
             repeat = t_repeat;
@@ -577,11 +588,11 @@ void Fraction::repeated_decimal_to_fraction(double d)
 
     unsigned int repeat = get_repeat_part(t);
 
-    cout << repeat << endl;
+    //cout << repeat << endl;
 
     confirm_repeat_part(t, repeat, start);
 
-    cout << repeat << endl;
+    //cout << repeat << endl;
 
     for(int i = 0; i < get_long_int_length(repeat); i++){
 
@@ -590,13 +601,13 @@ void Fraction::repeated_decimal_to_fraction(double d)
 
     down *= (get_long_int_length(t) - start > 0)? (unsigned int)pow(10, (get_long_int_length(t) - start)) : 1;
 
-    cout << down << endl;
+    //cout << down << endl;
 
     up = t % (unsigned int)pow(10, get_long_int_length(repeat)) + (t / (unsigned int)pow(10, start)) * ((unsigned int)pow(10, get_long_int_length(repeat)) - 1);
 
     up = up + get_double_integer_part(d) * down;
 
-    cout << up << endl;
+    //cout << up << endl;
     _top = up;
     _bottom = down;
 }
