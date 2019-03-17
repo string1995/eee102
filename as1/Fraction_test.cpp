@@ -9,7 +9,7 @@ int main()
     Fraction b(3,-4);
     Fraction c(5);
     Fraction d(-3.14);
-    Fraction e = 1.3333;
+    Fraction e = 1.333333;
     Fraction f = -b;
 
 
@@ -78,6 +78,12 @@ int main()
     cout << "; b = " << b << endl << endl;
 
 
+    cout << "b += c; b = " << (b+=c) << endl;
+    cout << "b -= c; b = " << (b-=c) << endl;
+    cout << "b *= c; b = " << (b*=c) << endl;
+    cout << "b /= c; b = " << (b/=c) << endl << endl;
+
+
     cout << "if b > c ?? " << ((b>c)? "Yes" : "No") << endl;
     cout << "if b < c ?? " << ((b<c)? "Yes" : "No") << endl;
     cout << "if b >= c ?? " << ((b>=c)? "Yes" : "No") << endl;
@@ -87,11 +93,6 @@ int main()
     cout << "if b != c ?? " << ((b!=c)? "Yes" : "No") << endl << endl;
 
 
-    cout << "b += c; b = " << (b+=c) << endl;
-    cout << "b -= c; b = " << (b-=c) << endl;
-    cout << "b *= c; b = " << (b*=c) << endl;
-    cout << "b /= c; b = " << (b/=c) << endl << endl;
-
     cout << "Devide 0 test: ";
 
     try{
@@ -100,14 +101,21 @@ int main()
         cout << msg << endl;
     }
 
+    cout << endl << "************ This is the END of TEST section !! ************" << endl << endl;
+    cout << "Have a try by YOURSELF!!    (Press Ctrl+C to quit)" << endl;
+
     while(1){
-    try{
-        cout << endl << "Please Input a Fraction(-3/5) or a Decimals(e.g. 3.14): ";
-        cin >> a;
-        cout << a << endl;
-    }catch(const char* msg){
-        cout << endl << msg << endl;
-    }}
+
+        try{
+            cout << endl << "Please Input a Fraction(-3/5) or a Decimals(e.g. 3.14): ";
+            cin >> a;
+            cout << a << endl;
+        }catch(const char* msg){
+            cout << endl << msg << endl;
+        }
+
+
+    }
     
     return 0;
 }
