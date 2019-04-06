@@ -13,7 +13,6 @@ int main()
     Fraction f = -b;
 
 
-
     cout << "Output in Fraction Form: " << endl;
     cout << "a: " << a << endl;
     cout << "b: " << b << endl;
