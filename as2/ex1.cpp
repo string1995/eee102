@@ -19,12 +19,12 @@ int main()
 
     p += q + p;
 
-    q = p;
+    //q = p;
 
     iFraction o;
 
 
-    cout << q;
+    cout << convertF(convertF(q));
 
 
 /*

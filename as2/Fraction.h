@@ -619,7 +619,7 @@ void Fraction::repeated_decimal_to_fraction(double d)
 /**
  * 带分数运算
  *
- * @author yimian LIU
+ * @author Yimian LIU
  * @category eee102-as2
  * @package Fraction.h
  */
@@ -707,6 +707,26 @@ class iFraction: public Fraction {
 };
 
 
+/**
+ * 分数类型转换
+ * 多态1 - 假分数转带分数
+ *
+ * @param Fraction f 待转假分数
+ * @return iFraction 带分数
+ */
+inline iFraction convertF(Fraction f){
+    return (iFraction)f;
+}
 
+/**
+ * 分数类型转换
+ * 多态2 - 带分数转假分数
+ *
+ * @param iFraction f 待转带分数
+ * @return Fraction 假分数
+ */
+inline Fraction convertF(iFraction f){
+    return (Fraction)f;
+}
 
 #endif
