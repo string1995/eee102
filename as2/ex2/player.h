@@ -8,8 +8,10 @@
 #ifndef _PLAYER
 #define _PLAYER
 
+#include <iostream>
 #include <iomanip>		// use for setting field width
 #include <time.h>		// use for generating random factor
+#include <string>
 #include "container.h"
 
 enum job {sw, ar, mg};	/* define 3 jobs by enumerate type
@@ -22,7 +24,8 @@ class player
 protected:
 	int HP, HPmax, MP, MPmax, AP, DP, speed, EXP, LV;
 	// General properties of all characters
-	string name;	// character name
+protected:
+	std::string name;	// character name
 	job role;		/* character's job, one of swordman, archer and mage,
 					   as defined by the enumerate type */
 	container bag;	// character's inventory
