@@ -83,9 +83,13 @@ bool swordsman::attack(player &p)
 	HPtemp=(int)((1.0*AP/p.DP)*AP*5/(rand()%4+10));
 	cout<<name<<" uses bash, "<<p.name<<"'s HP decreases "<<HPtemp<<endl;
 	EXPtemp=(int)(EXPtemp+HPtemp*1.2);
-	p.HP=(int)(p.HP-HPtemp);
+//<!-- luck
+    p.HP=(int)(p.HP-HPtemp*((double)(rand() % 100 + 50) / (double)100));
+//-->
 	cout<<name<<" obtained "<<EXPtemp<<" experience."<<endl;
-	EXP=(int)(EXP+EXPtemp);
+//<!-- luck
+    EXP=(int)(EXP+EXPtemp*((double)(rand() % 100 + 50) / (double)100));
+//-->
 	system("pause");
 	return 1;		// Attack success
 }
@@ -119,7 +123,9 @@ bool swordsman::specialatt(player &p)
 		cout<<name<<" uses leap attack, "<<p.name<<"'s HP decreases "<<HPtemp<<endl;
 		cout<<name<<" obtained "<<EXPtemp<<" experience."<<endl;
 		p.HP=(int)(p.HP-HPtemp);
-		EXP=(int)(EXP+EXPtemp);
+//<!-- luck
+    EXP=(int)(EXP+EXPtemp*((double)(rand() % 100 + 50) / (double)100));
+//-->
 		system("pause");
 	}
 	return 1;	// special attack succeed

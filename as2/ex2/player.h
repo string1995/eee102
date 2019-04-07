@@ -20,6 +20,8 @@ class player
 {
 	friend void showinfo(player &p1, player &p2);
 	friend class swordsman;
+	friend class archer;
+	friend class mage;
 
 protected:
 	int HP, HPmax, MP, MPmax, AP, DP, speed, EXP, LV;
@@ -34,6 +36,9 @@ public:
 	virtual bool attack(player &p)=0;	// normal attack
 	virtual bool specialatt(player &p)=0;	//special attack
 	virtual void isLevelUp()=0;			// level up judgement
+//<!--
+	virtual void AI(player &p)=0;			// AI for robot
+//-->
 	/* Attention!
 	These three methods are called "Pure virtual functions".
 	They have only declaration, but no definition.

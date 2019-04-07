@@ -6,10 +6,13 @@
 
 #include <iostream>
 #include <string>
+#include <cstdlib>
+#include <cmath>
 using namespace std;
 
 #include "swordsman.h"
-
+#include "archer.h"
+#include "mage.h"
 
 int main()
 {
@@ -18,6 +21,11 @@ int main()
 	cout <<"Please input player's name: ";
 	cin >>tempName;		// get player's name from keyboard input
 	player *human;		// use pointer of base class, convenience for polymorphism
+
+//<!--
+	player *enemy;  // use pointer of base class, convenience for polymorphism
+//-->
+
 	int tempJob;		// temp choice for job selection
 	do
 	{
@@ -30,6 +38,16 @@ int main()
 			human=new swordsman(1,tempName);	// create the character with user inputted name and job
 			success=1;		// operation succeed
 			break;
+//<!--
+		case 2:
+			human=new archer(1,tempName);	// create the character with user inputted name and job
+			success=1;		// operation succeed
+			break;
+		case 3:
+			human=new mage(1,tempName);	// create the character with user inputted name and job
+			success=1;		// operation succeed
+			break;
+//-->
 		default:
 			break;				// In this case, success=0, character creation failed
 		}
@@ -42,17 +60,27 @@ int main()
 		nOpp++;
 		system("cls");
 		cout<<"STAGE" <<nOpp<<endl;
-		cout<<"Your opponent, a Level "<<i<<" Swordsman."<<endl;
+//<!--
+		srand((unsigned int)time(NULL));
+		short t_s = rand() % 3;
+		cout<<"Your opponent, a Level "<<i<<((t_s == 0)?" Swordsman.":"")<<((t_s == 1)?" Archer.":"")<<((t_s == 2)?" Mage.":"")<<endl;
+
+//-->
 		system("pause");
-		swordsman enemy(i, "Warrior");	// Initialise an opponent, level i, name "Junior"
+//<!--
+		if(t_s == 0) enemy = new swordsman(i, "Warrior");
+		if(t_s == 1) enemy = new archer(i, "Warrior");
+		if(t_s == 2) enemy = new mage(i, "Warrior");
+//-->
+		
 		human->reFill();				// get HP/MP refill before start fight
 		
-		while(!human->death() && !enemy.death())	// no died
+		while(!human->death() && !enemy->death())	// no died
 		{
 			success=0;
 			while (success!=1)
 			{
-				showinfo(*human,enemy);				// show fighter's information
+				showinfo(*human,*enemy);				// show fighter's information
 				cout<<"Please give command: "<<endl;
 				cout<<"1 Attack; 2 Special Attack; 3 Use Heal; 4 Use Magic Water; 0 Exit Game"<<endl;
 				cin>>tempCom;
@@ -67,14 +95,14 @@ int main()
 					else
 						break;
 				case 1:
-					success=human->attack(enemy);
+					success=human->attack(*enemy);
 					human->isLevelUp();
-					enemy.isDead();
+					enemy->isDead();
 					break;
 				case 2:
-					success=human->specialatt(enemy);
+					success=human->specialatt(*enemy);
 					human->isLevelUp();
-					enemy.isDead();
+					enemy->isDead();
 					break;
 				case 3:
 					success=human->useHeal();
@@ -86,12 +114,12 @@ int main()
 					break;
 				}
 			}
-			if(!enemy.death())		// If AI still alive
-				enemy.AI(*human);
+			if(!enemy->death())		// If AI still alive
+				enemy->AI(*human);
 			else							// AI died
 			{
 				cout<<"YOU WIN"<<endl;
-				human->transfer(enemy);		// player got all AI's items
+				human->transfer(*enemy);		// player got all AI's items
 			}
 			if (human->death())
 			{
@@ -102,6 +130,9 @@ int main()
 				return 0;
 			}
 		}
+//<!--
+		delete enemy;
+//-->
 	}
 	delete human;//7_?????????			// You win, program is getting to its end, what should we do here?
 	system("cls");

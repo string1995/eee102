@@ -90,10 +90,10 @@ void player::showRole()
 		cout<<"Swordsman";
 		break;
 	case ar:
-		cout<<"Archer";
+		cout<<"  Archer ";
 		break;
 	case mg:
-		cout<<"Mage";
+		cout<<"  Mage   ";
 		break;
 	default:
 		break;
