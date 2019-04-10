@@ -693,6 +693,15 @@ class iFraction: public Fraction {
             return o;
         };
 
+        /* 提取整数 */
+        inline int integer() const{
+            return _get_integer();
+        };
+
+        /* 提取分子 */
+        inline int itop() const{
+            return (int)_get_iTop();
+        };
 
     private:
         /* 获取带分数整数部分 */

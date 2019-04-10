@@ -15,16 +15,16 @@ int main()
 
     Fraction q(-3.2);
 
-    iFraction p(q);
+    iFraction p(-3.2);
 
-    p += q + p;
+    //p += q + p;
 
     //q = p;
 
     iFraction o;
 
 
-    cout << convertF(convertF(q));
+    cout << p.integer();
 
 
 /*
