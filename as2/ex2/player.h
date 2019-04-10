@@ -8,10 +8,8 @@
 #ifndef _PLAYER
 #define _PLAYER
 
-#include <iostream>
 #include <iomanip>		// use for setting field width
 #include <time.h>		// use for generating random factor
-#include <string>
 #include "container.h"
 
 enum job {sw, ar, mg};	/* define 3 jobs by enumerate type
@@ -20,14 +18,11 @@ class player
 {
 	friend void showinfo(player &p1, player &p2);
 	friend class swordsman;
-	friend class archer;
-	friend class mage;
 
 protected:
 	int HP, HPmax, MP, MPmax, AP, DP, speed, EXP, LV;
 	// General properties of all characters
-protected:
-	std::string name;	// character name
+	string name;	// character name
 	job role;		/* character's job, one of swordman, archer and mage,
 					   as defined by the enumerate type */
 	container bag;	// character's inventory
@@ -36,9 +31,6 @@ public:
 	virtual bool attack(player &p)=0;	// normal attack
 	virtual bool specialatt(player &p)=0;	//special attack
 	virtual void isLevelUp()=0;			// level up judgement
-//<!--
-	virtual void AI(player &p)=0;			// AI for robot
-//-->
 	/* Attention!
 	These three methods are called "Pure virtual functions".
 	They have only declaration, but no definition.
@@ -50,8 +42,8 @@ public:
 	void isDead();		// check whether character is dead
 	bool useHeal();		// consume heal, irrelevant to job
 	bool useMW();		// consume magic water, irrelevant to job
-	void showRole();	// display character's job
 	void transfer(player &p);	// possess opponent's items after victory
+	void showRole();	// display character's job
 	
 private:
 	bool playerdeath;			// whether character is dead, doesn't need to be accessed or inherited

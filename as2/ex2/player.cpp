@@ -2,9 +2,7 @@
 //		player.cpp
 //=======================
 
-#include "player.h"
 
-using namespace std;
 // character's HP and MP resume
 void player::reFill()
 {
@@ -23,7 +21,7 @@ void player::isDead()
 {
 	if(HP<=0)		// HP less than 0, character is dead
 	{
-		cout<< name <<" is Dead." <<endl;
+		cout<<name<<" is Dead." <<endl;
 		system("pause");
 		playerdeath=1;	// give the label of death value 1
 	}
@@ -76,8 +74,7 @@ void player::transfer(player &p)
 {
 	cout<<name<<" got"<<p.bag.nOfHeal()<<" Heal, and "<<p.bag.nOfMW()<<" Magic Water."<<endl;
 	system("pause");
-
-	this->bag.set(this->bag.nOfHeal() + p.bag.nOfHeal(), this->bag.nOfMW() + p.bag.nOfMW());
+	3_???????????
 	// set the character's bag, get opponent's items
 }
 
@@ -90,10 +87,10 @@ void player::showRole()
 		cout<<"Swordsman";
 		break;
 	case ar:
-		cout<<"  Archer ";
+		cout<<"Archer";
 		break;
 	case mg:
-		cout<<"  Mage   ";
+		cout<<"Mage";
 		break;
 	default:
 		break;
@@ -102,7 +99,7 @@ void player::showRole()
 
 
 // display character's job
-void showinfo(player &p1, player &p2)
+4_??????????????	
 {
 	system("cls");
 	cout<<"##############################################################"<<endl;

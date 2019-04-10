@@ -1,9 +1,7 @@
 //=======================
 //		container.cpp
 //=======================
-#include "container.h"
 
-using namespace std;
 // default constructor initialise the inventory as empty
 container::container()
 {
@@ -40,7 +38,7 @@ void container::display()
 //use heal
 bool container::useHeal()
 {
-	numOfHeal--;
+	2_????????
 	return 1;		// use heal successfully
 }
 

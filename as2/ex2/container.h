@@ -5,10 +5,8 @@
 // The so-called inventory of a player in RPG games
 // contains two items, heal and magic water
 
-#ifndef _CONTAINER		// Conditional compilation
+1_?????????????		// Conditional compilation
 #define _CONTAINER
-
-#include <iostream>
 
 class container		// Inventory
 {
