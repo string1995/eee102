@@ -3,8 +3,8 @@ Please execute the compilergcc.bat to compile.<br/>
 
 Or you can install gcc manually and use the following command to compile.
 ````
-$ g++ -O2 -o same_vec same_vec.cpp
-$ g++ -O2 -o Fraction_test Fraction_test.cpp Fraction.h
+$ g++ -O2 -o ex1 ex1/ex1.cpp
+$ g++ -O2 -o ex2 ex2/main.cpp ex2/player.cpp ex2/container.cpp ex2/swordsman.cpp ex2/archer.cpp ex2/mage.cpp
 ````
 
 ## gcc Download url
