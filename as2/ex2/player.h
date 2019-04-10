@@ -50,8 +50,8 @@ public:
 	void isDead();		// check whether character is dead
 	bool useHeal();		// consume heal, irrelevant to job
 	bool useMW();		// consume magic water, irrelevant to job
-	void transfer(player &p);	// possess opponent's items after victory
 	void showRole();	// display character's job
+	void transfer(player &p);	// possess opponent's items after victory
 	
 private:
 	bool playerdeath;			// whether character is dead, doesn't need to be accessed or inherited

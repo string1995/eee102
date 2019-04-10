@@ -24,7 +24,7 @@ mage::mage(int lv_in, string name_in)
     
     playerdeath=0;
     EXP=LV*LV*75;
-    bag.set(lv_in, lv_in);
+    bag.set(lv_in*(rand()%2), lv_in*(rand()%2));
 }
 
 void mage::isLevelUp()
@@ -37,7 +37,9 @@ void mage::isLevelUp()
         HPmax+=8;
         MPmax+=2;
         speed+=2;
+        bag.set(bag.nOfHeal()+LV, bag.nOfMW()+LV);
         cout<<name<<" Level UP!"<<endl;
+        cout<<"Get " << LV << " Heal and " << LV << " Magic Water!"<<endl;
         cout<<"HP improved 8 points to "<<HPmax<<endl;
         cout<<"MP improved 2 points to "<<MPmax<<endl;
         cout<<"Speed improved 2 points to "<<speed<<endl;
@@ -54,18 +56,19 @@ bool mage::attack(player &p)
     double EXPtemp=0;       // player obtained exp
     double hit=1;           // attach factor, probably give critical attack
     srand((unsigned)time(NULL));        // generating random seed based on system time
+    int attack = (EXP/75 +25)/p.DP;
 
     // If speed greater than opponent, you have some possibility to do double attack
     if ((speed>p.speed) && (rand()%100<(speed-p.speed)))        // rand()%100 means generates a number no greater than 100
     {
-        HPtemp=(int)((1.0*AP/p.DP)*AP*5/(rand()%4+10));     // opponent's HP decrement calculated based their AP/DP, and uncertain chance
+        HPtemp=(int)((attack)*AP*5/(rand()%4+10));     // opponent's HP decrement calculated based their AP/DP, and uncertain chance
         cout<<name<<"'s quick strike hit "<<p.name<<", "<<p.name<<"'s HP decreased "<<HPtemp<<endl;
         p.HP=int(p.HP-HPtemp);
         EXPtemp=(int)(HPtemp*1.2);
     }
 
     // If speed smaller than opponent, the opponent has possibility to evade
-    if ((speed<p.speed) && (rand()%50<1))
+    else if ((speed<p.speed) && (rand()%50<1))
     {
         cout<<name<<"'s attack has been evaded by "<<p.name<<endl;
         system("pause");
@@ -73,19 +76,25 @@ bool mage::attack(player &p)
     }
 
     // 10% chance give critical attack
-    if (rand()%100<=10)
+    else
     {
-        hit=1.5;
-        cout<<"Critical attack: ";
+        if(rand()%100<=10) {
+            hit=1.5;
+            cout<<"Critical attack: ";
+        }
+        // Normal attack
+    //<!-- change
+        HPtemp=(int)(((attack)*AP*5/(rand()%4+10)) * hit);
+    //-->
+        cout<<name<<" uses fire ball, "<<p.name<<"'s HP decreases "<<HPtemp<<endl;
+        EXPtemp=(int)(EXPtemp+HPtemp*1.2);
+    //<!-- luck
+        p.HP=(int)(p.HP-HPtemp*((double)(rand() % 100 + 50) / (double)100));
+    //-->
+
     }
 
-    // Normal attack
-    HPtemp=(int)((1.0*AP/p.DP)*AP*5/(rand()%4+10));
-    cout<<name<<" uses bash, "<<p.name<<"'s HP decreases "<<HPtemp<<endl;
-    EXPtemp=(int)(EXPtemp+HPtemp*1.2);
-//<!-- luck
-    p.HP=(int)(p.HP-HPtemp*((double)(rand() % 100 + 50) / (double)100));
-//-->
+
     cout<<name<<" obtained "<<EXPtemp<<" experience."<<endl;
 //<!-- luck
     EXP=(int)(EXP+EXPtemp*((double)(rand() % 100 + 50) / (double)100));
@@ -109,7 +118,7 @@ bool mage::specialatt(player &p)
         //10% chance opponent evades
         if(rand()%100<=10)
         {
-            cout<<name<<"'s leap attack has been evaded by "<<p.name<<endl;
+            cout<<name<<"'s ffffffire balls attack has been evaded by "<<p.name<<endl;
             system("pause");
             return 1;
         }
@@ -122,7 +131,7 @@ bool mage::specialatt(player &p)
         HPtemp=(int)(AP*1.2*((double)(rand() % 100 + 50) / (double)100)+20);        // not related to opponent's DP
 //-->     
         EXPtemp=(int)(HPtemp*1.5);      // special attack provides more experience
-        cout<<name<<" uses leap attack, "<<p.name<<"'s HP decreases "<<HPtemp<<endl;
+        cout<<name<<" uses ffffffire balls attack, "<<p.name<<"'s HP decreases "<<HPtemp<<endl;
         cout<<name<<" obtained "<<EXPtemp<<" experience."<<endl;
         p.HP=(int)(p.HP-HPtemp);
         EXP=(int)(EXP+EXPtemp);
