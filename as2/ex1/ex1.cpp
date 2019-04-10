@@ -1,34 +1,21 @@
 #include <iostream>
+#include <cstdlib>
 #include "Fraction.h"
 
 using namespace std;
 
 int main()
 {
-    Fraction a;
-    Fraction b(3,-4);
-    Fraction c(5);
-    Fraction d(-3.14);
-    Fraction e = 1.333333;
-    Fraction f = -b;
+    iFraction a;
+    iFraction b(1,3,-4);
+    iFraction c = convertF(Fraction(3,-4));
+    iFraction d(-3.14);
+    iFraction e = 1.333333;
+    iFraction f = -b;
 
 
-    Fraction q(-3.2);
 
-    iFraction p(-3.2);
-
-    //p += q + p;
-
-    //q = p;
-
-    iFraction o;
-
-
-    cout << p.integer();
-
-
-/*
-    cout << "Output in Fraction Form: " << endl;
+    cout << "Output in iFraction Form: " << endl;
     cout << "a: " << a << endl;
     cout << "b: " << b << endl;
     cout << "c: " << c << endl;
@@ -46,13 +33,22 @@ int main()
     cout << "f: " << f.val() << endl << endl;
 
 
+    cout << "Output integer: " << endl;
+    cout << "a: " << a.integer() << endl;
+    cout << "b: " << b.integer() << endl;
+    cout << "c: " << c.integer() << endl;
+    cout << "d: " << d.integer() << endl;
+    cout << "e: " << e.integer() << endl;
+    cout << "f: " << f.integer() << endl << endl;
+
+
     cout << "Output Numerator: " << endl;
-    cout << "a: " << a.top() << endl;
-    cout << "b: " << b.top() << endl;
-    cout << "c: " << c.top() << endl;
-    cout << "d: " << d.top() << endl;
-    cout << "e: " << e.top() << endl;
-    cout << "f: " << f.top() << endl << endl;
+    cout << "a: " << a.itop() << endl;
+    cout << "b: " << b.itop() << endl;
+    cout << "c: " << c.itop() << endl;
+    cout << "d: " << d.itop() << endl;
+    cout << "e: " << e.itop() << endl;
+    cout << "f: " << f.itop() << endl << endl;
 
 
     cout << "Output Denominator: " << endl;
@@ -110,26 +106,13 @@ int main()
     cout << "Devide 0 test: ";
 
     try{
-        Fraction g(1,0);
+        iFraction g(2,1,0);
     }catch(const char* msg){
         cout << msg << endl;
     }
 
     cout << endl << "************ This is the END of TEST section !! ************" << endl << endl;
-    cout << "Have a try by YOURSELF!!    (Press Ctrl+C to quit)" << endl;
+    system("pause");
 
-    while(1){
-
-        try{
-            cout << endl << "Please Input a Fraction(-3/5) or a Decimals(e.g. 3.14): ";
-            cin >> a;
-            cout << a << endl;
-        }catch(const char* msg){
-            cout << endl << msg << endl;
-        }
-
-
-    }
-    */
     return 0;
 }

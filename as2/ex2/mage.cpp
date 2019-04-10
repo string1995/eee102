@@ -56,7 +56,7 @@ bool mage::attack(player &p)
     double EXPtemp=0;       // player obtained exp
     double hit=1;           // attach factor, probably give critical attack
     srand((unsigned)time(NULL));        // generating random seed based on system time
-    int attack = (EXP/75 +25)/p.DP;
+    float attack = ((float)EXP/((float)75 +25)/(float)p.DP)+1;
 
     // If speed greater than opponent, you have some possibility to do double attack
     if ((speed>p.speed) && (rand()%100<(speed-p.speed)))        // rand()%100 means generates a number no greater than 100

@@ -56,7 +56,7 @@ bool swordsman::attack(player &p)
     double EXPtemp=0;       // player obtained exp
     double hit=1;           // attach factor, probably give critical attack
     srand((unsigned)time(NULL));        // generating random seed based on system time
-    int attack = AP/p.DP;  //depand on player's speed and p.DP
+    float attack = ((float)AP/(float)p.DP);  //depand on player's speed and p.DP
 
     // If speed greater than opponent, you have some possibility to do double attack
     if ((speed>p.speed) && (rand()%100<(speed-p.speed)))        // rand()%100 means generates a number no greater than 100

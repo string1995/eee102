@@ -658,6 +658,52 @@ class iFraction: public Fraction {
         /* 析构 */
         ~iFraction(){};
 
+
+        /* 加法重载 */
+        iFraction operator +(const iFraction& obj) const{
+            return iFraction(this->top() * obj.bottom() + this->bottom() * obj.top(), this->bottom() * obj.bottom());
+        };
+
+        /* 加法重载(后) */
+        friend iFraction operator +(const double d, const iFraction& obj){
+            return obj + d;
+        };
+
+        /* 减法重载 */
+        iFraction operator -(const iFraction& obj) const{
+            return iFraction(this->top() * obj.bottom() - this->bottom() * obj.top(), this->bottom() * obj.bottom());
+        };
+
+        /* 乘法重载 */
+        iFraction operator *(const iFraction& obj) const{
+            return iFraction(this->top() * obj.top(), this->bottom() * obj.bottom());
+        };
+
+        /* 乘法重载(后) */
+        friend iFraction operator *(const double d, const iFraction& obj){
+            return obj * d;
+        };
+
+        /* 除法重载 */
+        iFraction operator /(const iFraction& obj) const{
+            return iFraction(this->top() * obj.bottom(), this->bottom() * obj.top());
+        };
+
+        /* 求余重载 */
+        iFraction operator %(const iFraction& obj) const{
+            return iFraction(fmod(this->val(), obj.val()));
+        };
+
+        /* 求余重载 */
+        iFraction operator %(const int t) const{
+            return iFraction(fmod(this->val(), t));
+        };
+
+        /* 求余重载 */
+        iFraction operator %(const double t) const{
+            return iFraction(fmod(this->val(), t));
+        };
+
         /* 前++重载 */
         iFraction operator ++(){
             if(this->_isNegative) this->_top -= this->_bottom;
@@ -670,6 +716,22 @@ class iFraction: public Fraction {
             if(this->_isNegative) this->_top += this->_bottom;
             else this->_top -= this->_bottom;
             return *this;
+        };
+
+        /* 后++重载 */
+        iFraction operator ++(int){
+            iFraction f = *this;
+            if(_isNegative) _top -= _bottom;
+            else _top += _bottom;
+            return f;
+        };
+
+        /* 后--重载 */
+        iFraction operator --(int){
+            iFraction f = *this;
+            if(_isNegative) _top += _bottom;
+            else _top -= _bottom;
+            return f;
         };
 
         /* 负号重载 */
